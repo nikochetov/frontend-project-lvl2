@@ -9,9 +9,7 @@ env:
 # https://github.com/babel/babel-eslint
 parser: babel-eslint
 
-extends:
-  - 'airbnb-base'
 
 rules:
   no-console: 0
-  import/extensions: 0 
+  import/extensions: 0
