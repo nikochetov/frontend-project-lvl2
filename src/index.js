@@ -1,31 +1,29 @@
 import fs from 'fs';
 
 const genDiff = (pathToFirstFile, pathToSecondFile) => {
-  const firstFileData = fs.readFileSync(pathToFirstFile, "UTF-8");
-  const secondFileData = fs.readFileSync(pathToSecondFile, "UTF-8");
-  const firstFileDataToObj = JSON.parse(firstFileData);
-  const secondFileDataToObj = JSON.parse(secondFileData);
-  const firstFileKeys = Object.keys(firstFileDataToObj);
-  const secondFileKeys = Object.keys(secondFileDataToObj);
+  const firstFileData = JSON.parse(fs.readFileSync(pathToFirstFile, "UTF-8"));
+  const secondFileData = JSON.parse(fs.readFileSync(pathToSecondFile, "UTF-8"));
+  const firstFileKeys = Object.keys(firstFileData);
+  const secondFileKeys = Object.keys(secondFileData);
   const addedData = secondFileKeys
     .filter(item => !firstFileKeys.includes(item))
     .reduce((acc, current) => {
-      acc.push([`  + ${current}: ${secondFileDataToObj[current]}`]);
+      acc.push([`  + ${current}: ${secondFileData[current]}`]);
       return acc;
     }, []);
   const reduced = firstFileKeys.reduce((acc, current) => {
     if (!secondFileKeys.includes(current)) {
-      acc.push([`  - ${current}: ${firstFileDataToObj[current]}`]);
+      acc.push([`  - ${current}: ${firstFileData[current]}`]);
     }
-    if (firstFileDataToObj[current] === secondFileDataToObj[current]) {
-      acc.push([`    ${current}: ${firstFileDataToObj[current]}`]);
+    if (firstFileData[current] === secondFileData[current]) {
+      acc.push([`    ${current}: ${firstFileData[current]}`]);
     }
     if (
       secondFileKeys.includes(current) &&
-      firstFileDataToObj[current] !== secondFileDataToObj[current]
+      firstFileData[current] !== secondFileData[current]
     ) {
-      acc.push([`  + ${current}: ${firstFileDataToObj[current]}`]);
-      acc.push([`  - ${current}: ${secondFileDataToObj[current]}`]);
+      acc.push([`  + ${current}: ${firstFileData[current]}`]);
+      acc.push([`  - ${current}: ${secondFileData[current]}`]);
     }
 
     return acc;
