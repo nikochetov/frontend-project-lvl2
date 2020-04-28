@@ -22,8 +22,8 @@ const genDiff = (pathToFirstFile, pathToSecondFile) => {
       secondFileKeys.includes(current) &&
       firstFileData[current] !== secondFileData[current]
     ) {
-      acc.push([`  + ${current}: ${firstFileData[current]}`]);
-      acc.push([`  - ${current}: ${secondFileData[current]}`]);
+      acc.push([`  + ${current}: ${secondFileData[current]}`]);
+      acc.push([`  - ${current}: ${firstFileData[current]}`]);
     }
 
     return acc;
