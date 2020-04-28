@@ -5,6 +5,6 @@ test:
 test-coverage:
 		npm test -- --coverage
 lint:
-		npx eslint
+		npx eslint .
 run:
 		npx babel-node 'src/bin/index.js'
