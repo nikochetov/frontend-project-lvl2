@@ -1,3 +1,5 @@
+install:
+		npm install
 publish:
 		npm publish --dry-run
 test:
@@ -6,5 +8,3 @@ test-coverage:
 		npm test -- --coverage
 lint:
 		npx eslint .
-run:
-		npx babel-node 'src/bin/index.js'
