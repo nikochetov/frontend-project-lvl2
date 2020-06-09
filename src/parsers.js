@@ -1,9 +1,8 @@
-import fs from 'fs';
 import yaml from 'js-yaml';
 import ini from 'ini';
 import path from 'path';
 
-const parser = (pathToFile) => {
+export default (pathToFile) => {
   const format = path.extname(pathToFile);
   let parse;
   if (format === '.json') {
@@ -14,7 +13,4 @@ const parser = (pathToFile) => {
     parse = ini.parse;
   }
   return parse;
-}
-
-
-export default parser;
+};
