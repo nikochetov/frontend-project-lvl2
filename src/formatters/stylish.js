@@ -1,6 +1,3 @@
-// import genDiff from '../genDiff.js';
-// import _ from 'lodash';
-
 export default (diff) => {
   const iter = (idiff, depth) => {
     const spaces = ' '.repeat(depth);
