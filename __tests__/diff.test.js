@@ -1,32 +1,29 @@
-import genDiff from '../src/index.js';
-import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import genDiff from '../index.js';
 
-describe('testing diff', () => {
-  test('testing gendiff for JSON files', () => {
-    const afterPath = path.join(__dirname, '..', '__fixtures__', 'after.json');
-    const beforePath = path.join(__dirname, '..', '__fixtures__', 'before.json');
-    const expected = `{
-    host: hexlet.io
-  + timeout: 20
-  - timeout: 50
-  - proxy: 123.234.53.22
-  - follow: false
-  + verbose: true
-}`
-  expect(genDiff(beforePath, afterPath)).toEqual(expected);
-  });
-  test('testing gendiff for YAML files', () => {
-    const afterPath = path.join(__dirname, '..', '__fixtures__', 'after.yml');
-    const beforePath = path.join(__dirname, '..', '__fixtures__', 'before.yml');
-    const expected = `{
-    host: hexlet.io
-  + timeout: 20
-  - timeout: 50
-  - proxy: 123.234.53.22
-  - follow: false
-  + verbose: true
-}`
-  expect(genDiff(beforePath, afterPath)).toEqual(expected);
-  });
-});
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const table = [
+  ['json', 'stylish'],
+  ['json', 'plain'],
+  ['json', 'json'],
+  ['yml', 'stylish'],
+  ['yml', 'plain'],
+  ['yml', 'json'],
+  ['ini', 'stylish'],
+  ['ini', 'plain'],
+  ['ini', 'json'],
+];
+
+test.each(table)(
+  'compare 2 files(%s, %s)', (type, format) => {
+    const before = `./__fixtures__/before.${type}`;
+    const after = `./__fixtures__/after.${type}`;
+    const result = fs.readFileSync(`./__fixtures__/${format}.txt`, 'utf-8');
+    // console.log(genDiff(before, after, format));
+    expect(genDiff(before, after, format)).toEqual(result);
+  },
+);
