@@ -1,11 +1,12 @@
+const stringify = (value) => {
+  if (typeof value === 'object') {
+    return '[complex value]';
+  }
+  return `'${value}'`;
+};
+
 export default (diff) => {
   const iter = (idiff, path) => {
-    const stringify = (value) => {
-      if (typeof value === 'object') {
-        return '[complex value]';
-      }
-      return `'${value}'`;
-    };
     const rendering = idiff.reduce((prev, current) => {
       if (current.type === 'node') {
         return [...prev, iter(current.children, `${path}${current.name}.`)];
