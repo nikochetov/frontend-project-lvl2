@@ -23,7 +23,6 @@ test.each(table)(
     const before = `./__fixtures__/before.${type}`;
     const after = `./__fixtures__/after.${type}`;
     const result = fs.readFileSync(`./__fixtures__/${format}.txt`, 'utf-8');
-    // console.log(genDiff(before, after, format));
     expect(genDiff(before, after, format)).toEqual(result);
   },
 );
