@@ -1,16 +1,20 @@
+import fs from 'fs';
 import yaml from 'js-yaml';
 import ini from 'ini';
 import path from 'path';
 
-export default (pathToFile) => {
-  const format = path.extname(pathToFile);
+export default (path1, path2) => {
+  const formatOfPath1 = path.extname(path1);
+  const formatOfPath2 = path.extname(path2);
   let parse;
-  if (format === '.json') {
+  if (formatOfPath1 && formatOfPath2 === '.json') {
     parse = JSON.parse;
-  } else if (format === '.yml') {
+  } else if (formatOfPath1 && formatOfPath2 === '.yml') {
     parse = yaml.safeLoad;
-  } else if (format === '.ini') {
+  } else if (formatOfPath1 && formatOfPath2 === '.ini') {
     parse = ini.parse;
   }
-  return parse;
+  const firstFileData = parse(fs.readFileSync(path1, 'utf-8'));
+  const secondFileData = parse(fs.readFileSync(path2, 'utf-8'));
+  return [firstFileData, secondFileData];
 };
