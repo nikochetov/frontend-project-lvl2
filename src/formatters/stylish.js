@@ -9,25 +9,20 @@ export default (diff) => {
       }
       return value;
     };
-    const rendering = idiff.reduce((prev, current) => {
-      if (current.type === 'node') {
-        return [
-          ...prev, `${spaces}  ${current.name}: {\n${iter(current.children, depth + 4)}\n${spaces}  }`,
-        ];
-      }
-      switch (current.status) {
+    const rendering = idiff.map((node) => {
+      switch (node.status) {
         case 'modified':
-          return [
-            ...prev, `${spaces}- ${current.name}: ${stringify(current.before)}\n${spaces}+ ${current.name}: ${stringify(current.after)}`,
-          ];
+          return `${spaces}- ${node.name}: ${stringify(node.before)}\n${spaces}+ ${node.name}: ${stringify(node.after)}`;
         case 'removed':
-          return [...prev, `${spaces}- ${current.name}: ${stringify(current.value)}`];
+          return `${spaces}- ${node.name}: ${stringify(node.value)}`;
         case 'added':
-          return [...prev, `${spaces}+ ${current.name}: ${stringify(current.value)}`];
+          return `${spaces}+ ${node.name}: ${stringify(node.value)}`;
         case 'unchanged':
-          return [...prev, `${spaces}  ${current.name}: ${stringify(current.value)}`];
+          return `${spaces}  ${node.name}: ${stringify(node.value)}`;
+        case 'parent':
+          return `${spaces}  ${node.name}: {\n${iter(node.children, depth + 4)}\n${spaces}  }`;
         default:
-          return [...prev];
+          throw new Error(`Error! '${node.status}' is invalid`);
       }
     }, []);
     return `${rendering.join('\n')}`;
