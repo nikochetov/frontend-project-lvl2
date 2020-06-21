@@ -4,28 +4,26 @@ const genDiff = (beforeFile, afterFile) => {
   const beforeFileKeys = Object.keys(beforeFile);
   const afterFileKeys = Object.keys(afterFile);
   const commonKeys = _.union(beforeFileKeys, afterFileKeys);
-  const buildDiff = commonKeys.reduce((prev, current) => {
-    const hasChildBoth = (typeof beforeFile[current] === 'object') && (typeof afterFile[current] === 'object');
-    if (_.has(beforeFile, current) && _.has(afterFile, current)) {
-      if (_.isEqual(beforeFile[current], afterFile[current])) {
-        return [...prev, { name: current, status: 'unchanged', value: afterFile[current] }];
-      }
-      if (!_.isEqual(beforeFile[current], afterFile[current]) && !hasChildBoth) {
-        return [...prev, {
-          name: current, status: 'modified', before: beforeFile[current], after: afterFile[current],
-        }];
-      }
-      if (hasChildBoth) {
-        return [...prev, {
-          name: current, type: 'node', children: genDiff(beforeFile[current], afterFile[current]),
-        }];
-      }
+  const buildDiff = commonKeys.map((key) => {
+    const hasChildBoth = _.isObject(beforeFile[key]) && _.isObject(afterFile[key]);
+    if (_.has(beforeFile, key) && !_.has(afterFile, key)) {
+      return { name: key, status: 'removed', value: beforeFile[key] };
     }
-    if (_.has(beforeFile, current) && !_.has(afterFile, current)) {
-      return [...prev, { name: current, status: 'removed', value: beforeFile[current] }];
+    if (!_.has(beforeFile, key) && _.has(afterFile, key)) {
+      return { name: key, status: 'added', value: afterFile[key] };
     }
-    return [...prev, { name: current, status: 'added', value: afterFile[current] }];
-  }, []);
+    if (!_.isEqual(beforeFile[key], afterFile[key]) && !hasChildBoth) {
+      return {
+        name: key, status: 'modified', before: beforeFile[key], after: afterFile[key],
+      };
+    }
+    if (hasChildBoth) {
+      return {
+        name: key, status: 'parent', children: genDiff(beforeFile[key], afterFile[key]),
+      };
+    }
+    return { name: key, status: 'unchanged', value: afterFile[key] };
+  });
   return buildDiff;
 };
 
