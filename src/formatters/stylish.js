@@ -28,7 +28,7 @@ export default (diff) => {
           throw new Error(`Error! '${node.status}' is invalid`);
       }
     });
-    return `${makeRender.join('\n')}`;
+    return makeRender.join('\n');
   };
   return `{\n${iter(diff, 2)}\n}`;
 };
