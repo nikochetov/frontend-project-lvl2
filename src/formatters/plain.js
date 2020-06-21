@@ -9,7 +9,7 @@ const stringify = (value) => {
 
 export default (diff) => {
   const iter = (idiff, path) => {
-    const rendering = idiff
+    const makeRender = idiff
       .filter((node) => node.status !== 'unchanged')
       .map((node) => {
         switch (node.status) {
@@ -25,7 +25,7 @@ export default (diff) => {
             throw new Error(`Error! '${node.status}' is invalid`);
         }
       }, []);
-    return rendering.join('\n');
+    return makeRender.join('\n');
   };
   return iter(diff, '');
 };
