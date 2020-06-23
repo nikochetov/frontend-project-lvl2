@@ -25,7 +25,7 @@ export default (diff) => {
         case 'parent':
           return `${spaces}  ${node.name}: {\n${iter(node.children, depth + 4)}\n${spaces}  }`;
         default:
-          throw new Error(`Error! '${node.status}' is invalid`);
+          throw new Error(`Error! '${node.status}' is invalid for node ${node.name}`);
       }
     });
     return makeRender.join('\n');
