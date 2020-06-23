@@ -22,7 +22,7 @@ export default (diff) => {
           case 'parent':
             return iter(node.children, `${path}${node.name}.`);
           default:
-            throw new Error(`Error! '${node.status}' is invalid`);
+            throw new Error(`Error! '${node.status}' is invalid for node ${node.name}`);
         }
       }, []);
     return makeRender.join('\n');
