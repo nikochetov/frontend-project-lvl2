@@ -16,8 +16,8 @@
       {
         "name": "setting3",
         "status": "modified",
-        "before": true,
-        "after": {
+        "valueBefore": true,
+        "valueAfter": {
           "key": "value"
         }
       },
@@ -63,8 +63,8 @@
       {
         "name": "baz",
         "status": "modified",
-        "before": "bas",
-        "after": "bars"
+        "valueBefore": "bas",
+        "valueAfter": "bars"
       },
       {
         "name": "foo",
@@ -74,10 +74,10 @@
       {
         "name": "nest",
         "status": "modified",
-        "before": {
+        "valueBefore": {
           "key": "value"
         },
-        "after": "str"
+        "valueAfter": "str"
       }
     ]
   },
