@@ -1,12 +1,12 @@
 import _ from 'lodash';
 
 const stringify = (value, spaces) => {
-  if (_.isObject(value)) {
-    const key = Object.keys(value);
-    const objValue = Object.values(value);
-    return `{\n ${spaces}     ${key}: ${objValue}\n${spaces}  }`;
+  if (!_.isObject(value)) {
+    return value;
   }
-  return value;
+  const key = Object.keys(value);
+  const objValue = Object.values(value);
+  return `{\n ${spaces}     ${key}: ${objValue}\n${spaces}  }`;
 };
 
 export default (diff) => {
