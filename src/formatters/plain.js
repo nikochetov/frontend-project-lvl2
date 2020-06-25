@@ -24,7 +24,7 @@ export default (diff) => {
           default:
             throw new Error(`Error! '${node.status}' is invalid for node ${node.name}`);
         }
-      }, []);
+      });
     return makeRender.join('\n');
   };
   return iter(diff, '');
