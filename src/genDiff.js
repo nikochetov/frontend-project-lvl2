@@ -1,30 +1,28 @@
 import _ from 'lodash';
 
-const genDiff = (beforeFile, afterFile) => {
-  const beforeFileKeys = Object.keys(beforeFile);
-  const afterFileKeys = Object.keys(afterFile);
-  const commonKeys = _.union(beforeFileKeys, afterFileKeys);
+export default (beforeData, afterData) => {
+  const beforeDataKeys = Object.keys(beforeData);
+  const afterDataKeys = Object.keys(afterData);
+  const commonKeys = _.union(beforeDataKeys, afterDataKeys);
   const buildDiff = commonKeys.map((key) => {
-    const hasChildBoth = _.isObject(beforeFile[key]) && _.isObject(afterFile[key]);
-    if (!_.has(afterFile, key)) {
-      return { name: key, status: 'removed', value: beforeFile[key] };
+    const hasChildBoth = _.isObject(beforeData[key]) && _.isObject(afterData[key]);
+    if (!_.has(afterData, key)) {
+      return { name: key, status: 'removed', value: beforeData[key] };
     }
-    if (!_.has(beforeFile, key)) {
-      return { name: key, status: 'added', value: afterFile[key] };
+    if (!_.has(beforeData, key)) {
+      return { name: key, status: 'added', value: afterData[key] };
     }
     if (hasChildBoth) {
       return {
-        name: key, status: 'parent', children: genDiff(beforeFile[key], afterFile[key]),
+        name: key, status: 'parent', children: genDiff(beforeData[key], afterData[key]),
       };
     }
-    if (beforeFile[key] !== afterFile[key]) {
+    if (beforeData[key] !== afterData[key]) {
       return {
-        name: key, status: 'modified', before: beforeFile[key], after: afterFile[key],
+        name: key, status: 'modified', valueBefore: beforeData[key], valueAfter: afterData[key],
       };
     }
-    return { name: key, status: 'unchanged', value: afterFile[key] };
+    return { name: key, status: 'unchanged', value: afterData[key] };
   });
   return buildDiff;
 };
-
-export default genDiff;
