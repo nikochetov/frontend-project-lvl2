@@ -15,7 +15,7 @@ export default (diff) => {
     const makeRender = idiff.map((node) => {
       switch (node.status) {
         case 'modified':
-          return `${spaces}- ${node.name}: ${stringify(node.before, spaces)}\n${spaces}+ ${node.name}: ${stringify(node.after, spaces)}`;
+          return `${spaces}- ${node.name}: ${stringify(node.valueBefore, spaces)}\n${spaces}+ ${node.name}: ${stringify(node.valueAfter, spaces)}`;
         case 'removed':
           return `${spaces}- ${node.name}: ${stringify(node.value, spaces)}`;
         case 'added':

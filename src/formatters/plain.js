@@ -14,7 +14,7 @@ export default (diff) => {
       .map((node) => {
         switch (node.status) {
           case 'modified':
-            return `Property '${path}${node.name}' was changed from ${stringify(node.before)} to ${stringify(node.after)}`;
+            return `Property '${path}${node.name}' was changed from ${stringify(node.valueBefore)} to ${stringify(node.valueAfter)}`;
           case 'removed':
             return `Property '${path}${node.name}' was deleted`;
           case 'added':
