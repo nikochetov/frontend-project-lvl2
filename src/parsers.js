@@ -5,13 +5,14 @@ import path from 'path';
 
 export default (pathToFile, data) => {
   const format = path.extname(pathToFile);
-  let parse;
-  if (format === '.json') {
-    parse = JSON.parse;
-  } else if (format === '.yml') {
-    parse = yaml.safeLoad;
-  } else if (format === '.ini') {
-    parse = ini.parse;
+  switch (format) {
+    case '.json':
+      return JSON.parse(data);
+    case '.yml':
+      return yaml.safeLoad(data);
+    case '.ini':
+      return ini.parse(data);
+    default:
+      throw new Error(`Invalid format: ${format}`);
   }
-  return parse(data);
 };
