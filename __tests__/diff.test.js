@@ -19,9 +19,10 @@ const table = [
   ['ini', 'json'],
 ];
 
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+
 test.each(table)(
   'compare 2 files(%s, %s)', (type, format) => {
-    const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
     const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
     const before = getFixturePath(`before.${type}`);
     const after = getFixturePath(`after.${type}`);
