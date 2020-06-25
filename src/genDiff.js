@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export default (beforeData, afterData) => {
+const genDiff = (beforeData, afterData) => {
   const beforeDataKeys = Object.keys(beforeData);
   const afterDataKeys = Object.keys(afterData);
   const commonKeys = _.union(beforeDataKeys, afterDataKeys);
@@ -26,3 +26,5 @@ export default (beforeData, afterData) => {
   });
   return buildDiff;
 };
+
+export default genDiff;
