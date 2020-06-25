@@ -1,11 +1,8 @@
-// import fs from 'fs';
 import yaml from 'js-yaml';
 import ini from 'ini';
-import path from 'path';
 
-export default (pathToFile, data) => {
-  const format = path.extname(pathToFile);
-  switch (format) {
+export default (extension, data) => {
+  switch (extension) {
     case '.json':
       return JSON.parse(data);
     case '.yml':
@@ -13,6 +10,6 @@ export default (pathToFile, data) => {
     case '.ini':
       return ini.parse(data);
     default:
-      throw new Error(`Invalid format: ${format}`);
+      throw new Error(`Invalid extension: ${extension}`);
   }
 };
