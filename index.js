@@ -16,6 +16,6 @@ export default (path1, path2, format) => {
   const beforeFileData = getParsedData(path1);
   const afterFileData = getParsedData(path2);
   const diff = genDiff(beforeFileData, afterFileData);
-  const makeRender = getRender(format);
-  return makeRender(diff);
+  const render = getRender(format);
+  return render(diff);
 };
