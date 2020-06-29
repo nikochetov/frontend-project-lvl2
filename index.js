@@ -9,8 +9,8 @@ const readFile = (filePath) => {
   const fileData = fs.readFileSync(fullPath, 'utf-8');
   return fileData;
 };
-const getFileExtension = (filePath) => path.extname(filePath);
-const getParsedData = (filePath) => parse(getFileExtension(filePath), readFile(filePath));
+const getFileType = (filePath) => path.extname(filePath).slice(1);
+const getParsedData = (filePath) => parse(getFileType(filePath), readFile(filePath));
 
 export default (path1, path2, format) => {
   const beforeFileData = getParsedData(path1);
