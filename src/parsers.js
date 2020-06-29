@@ -1,15 +1,15 @@
 import yaml from 'js-yaml';
 import ini from 'ini';
 
-export default (extension, data) => {
-  switch (extension) {
-    case '.json':
+export default (type, data) => {
+  switch (type) {
+    case 'json':
       return JSON.parse(data);
-    case '.yml':
+    case 'yml':
       return yaml.safeLoad(data);
-    case '.ini':
+    case 'ini':
       return ini.parse(data);
     default:
-      throw new Error(`Invalid extension: ${extension}`);
+      throw new Error(`Invalid type: ${type}`);
   }
 };
