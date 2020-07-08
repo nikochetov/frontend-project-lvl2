@@ -1,4 +1,4 @@
-# Diff.
+# Difference Calculator
 #### Compare 2 files (json, yaml, ini).
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/aed3f854d33951875bb9/maintainability)](https://codeclimate.com/github/nikochetov/frontend-project-lvl2/maintainability)
